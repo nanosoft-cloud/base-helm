@@ -24,9 +24,9 @@ ingress:
   hostname: ""
   path: "/"
   pathType: "Prefix"
-  tls: true
-  ingressClassName: {}
-  clusterIssuer: {}
+  tls: false
+  ingressClassName: ""
+  clusterIssuer: ""
 
 resources: {}
 
