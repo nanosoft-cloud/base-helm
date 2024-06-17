@@ -1,0 +1,40 @@
+{{- if eq (lower .Values.mode) "deployment"}}
+{{- if .Values.ingress.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "..fullname" . }}
+  labels:
+    {{- include "..labels" . | nindent 4 }}
+  annotations:
+    {{- if .Values.ingress.tls -}}
+    kubernetes.io/tls-acme: "true"
+    {{- end }}
+    {{- if .Values.ingress.clusterIssuer -}}
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.clusterIssuer }}
+    {{- end }}
+    ingress.kubernetes.io/whitelist-x-forwarded-for: "true"
+  {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  ingressClassName: {{ .Values.ingress.ingressClassName }}
+  {{- if .Values.ingress.tls }}
+  tls:
+    - hosts:
+        - {{ .Values.ingress.hostname }}
+      secretName: {{ printf "%s-tls" .Values.ingress.hostname }}
+  {{- end }}
+  rules:
+    - host: {{ .Values.ingress.hostname }}
+      http:
+        paths:
+          - path: {{ .Values.ingress.path }}
+            pathType: {{ .Values.ingress.pathType }}
+            backend:
+              service:
+                name: {{ .Release.Name }}
+                port:
+                  number: 80
+{{- end }}
+{{- end }}

@@ -1,0 +1,68 @@
+{{- if eq (lower .Values.mode) "cronjob"}}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "..fullname" . }}
+  labels:
+    {{- include "..labels" . | nindent 4 }}
+spec:
+  schedule: "{{ .Values.schedule }}"
+  concurrencyPolicy: {{ .Values.concurrencyPolicy }}
+  successfulJobsHistoryLimit; {{- .Values.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{- .Values.failedJobsHistoryLimit }}
+  timeZone: {{- .Values.timeZone }} 
+  jobTemplate:
+    selector:
+      matchLabels:
+        {{- include "..selectorLabels" . | nindent 6 }}
+    spec:
+      template:
+        metadata:
+          {{- with .Values.podAnnotations }}
+          annotations:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+          labels:
+            {{- include "..labels" . | nindent 8 }}
+            {{- with .Values.podLabels }}
+            {{- toYaml . | nindent 8 }}
+            {{- end }}
+        spec:
+          serviceAccountName: {{ include "..fullname" . }}
+          securityContext:
+            fsGroup: 1001
+          containers:
+          - name: {{ .Chart.Name }}
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            imagePullPolicy: IfNotPresent
+            {{- with .Values.env }}
+            env:
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- if .Values.secretEnv}}
+            envFrom:
+            - secretRef:
+              name: {{ include "..fullname" . }}
+            {{- end}}
+            {{- if .Values.command }}
+            command:
+            {{- range .Values.command }}
+              - {{ . | quote }}
+            {{- end }}
+            {{- end }}
+            {{- if .Values.args }}
+            args:
+            {{- range .Values.args }}
+              - {{ . | quote }}
+            {{- end }}
+            {{- end }}
+            securityContext:
+              capabilities:
+                drop:
+                - ALL
+              runAsNonRoot: true
+              runAsUser: 1001
+            resources:
+              {{- toYaml .Values.resources | nindent 12 }}
+          restartPolicy: OnFailure
+{{- end }}

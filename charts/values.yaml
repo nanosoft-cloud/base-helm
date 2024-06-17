@@ -1,0 +1,65 @@
+mode: "Deployment"
+
+replicaCount: 1
+
+image:
+  repository: ""
+  tag: "v0.0.0"
+
+env: {}
+secretEnv: false
+
+command: {}
+
+args: {}
+
+container:
+  port: 8000
+  
+imagePullSecrets: {}
+
+ingress:
+  enabled: false
+  annotations: {}
+  hostname: ""
+  path: "/"
+  pathType: "Prefix"
+  tls: true
+  ingressClassName: {}
+  clusterIssuer: {}
+
+resources: {}
+
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 90
+
+livenessProbe:
+  enabled: false
+  failureThreshold: 3
+  httpGet: /live
+  initialDelaySeconds: 15
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 2
+
+readinessProbe:
+  enabled: false
+  failureThreshold: 3
+  httpGet: /ready
+  initialDelaySeconds: 15
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 2
+
+maxSurge: "25%"
+maxUnavailable: "25%"
+revisionHistoryLimit: 2
+
+concurrencyPolicy: "Forbid"
+successfulJobsHistoryLimit: 1
+failedJobsHistoryLimit: 5
+timeZone: "America/Sao_Paulo"
