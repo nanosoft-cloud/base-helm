@@ -3,20 +3,11 @@ entries:
   base-helm:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-06-17T16:20:00.660893794-03:00"
-    digest: 58ce5d32d6c81774322614ae9b42a55f89360bf230ac21b7021e989bf2ef0d36
+    created: "2024-06-17T21:57:05.600810551-03:00"
+    digest: ae65af907351d614373367defdef49dc506846fbb591791ba820f6df4f865c1a
     name: base-helm
     type: application
     urls:
-    - https://nanosoft-cloud.github.io/base-helm/base-helm-1.0.0.tgz
+    - https://raw.githubusercontent.com/nanosoft-cloud/base-helm/gh-pages/base-helm-1.0.0.tgz
     version: 1.0.0
-  - apiVersion: v2
-    appVersion: 1.0.1
-    created: "2024-06-17T17:18:30.806861468-03:00"
-    digest: 1e8c5e4fa3f9dcd08093c893a2f2814c040b586830e948373c6a1a7e2293ac33
-    name: base-helm
-    type: application
-    urls:
-    - https://raw.githubusercontent.com/nanosoft-cloud/base-helm/gh-pages/base-helm-1.0.1.tgz
-    version: 1.0.1
-generated: "2024-06-17T17:18:30.806448754-03:00"
+generated: "2024-06-17T21:57:05.600249869-03:00"
