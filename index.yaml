@@ -10,4 +10,13 @@ entries:
     urls:
     - https://nanosoft-cloud.github.io/base-helm/base-helm-1.0.0.tgz
     version: 1.0.0
-generated: "2024-06-17T16:20:00.660459851-03:00"
+  - apiVersion: v2
+    appVersion: 1.0.1
+    created: "2024-06-17T17:18:30.806861468-03:00"
+    digest: 1e8c5e4fa3f9dcd08093c893a2f2814c040b586830e948373c6a1a7e2293ac33
+    name: base-helm
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/nanosoft-cloud/base-helm/gh-pages/base-helm-1.0.1.tgz
+    version: 1.0.1
+generated: "2024-06-17T17:18:30.806448754-03:00"
